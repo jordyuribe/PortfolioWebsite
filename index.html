@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<!--
+  index.html — Jordy Uribe Rivas Portfolio
+  =========================================
+  This is the main (and only) HTML file for the site.
+  It defines all the content and structure. The browser reads
+  this file top to bottom and uses it to build the page.
+
+  The three files that make up this site:
+    - index.html  → structure & content (this file)
+    - style.css   → all the visual styling (colors, fonts, layout)
+    - script.js   → interactivity (animations, filtering, scroll effects)
+-->
+<html lang="en">
+<head>
+  <!-- UTF-8 lets the browser handle special characters like é, ·, ↗ -->
+  <meta charset="UTF-8" />
+
+  <!-- Makes the site responsive on phones — without this, mobile browsers
+       would zoom out and show a tiny desktop version -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- The tab title shown in the browser -->
+  <title>Jordy Uribe Rivas</title>
+
+  <!-- Preconnect tells the browser to start a connection to Google Fonts
+       early, so fonts load faster when we actually request them below -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Load two fonts from Google Fonts:
+       - DM Mono: used for code-style text (labels, tags, nav links)
+       - Bricolage Grotesque: used for headings and body text
+       The "wght" values define which font weights we're loading -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet" />
+
+  <!-- Link to our stylesheet — must be in the same folder as index.html -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- CANVAS: The animated dot grid drawn in the background.
+       It's a blank drawing surface — script.js fills it with dots.
+       position: fixed in CSS keeps it behind everything else. -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- NOISE OVERLAY: A subtle grain texture layered on top of the canvas.
+       It's a tiny repeating SVG pattern set to very low opacity.
+       Gives the dark background more depth and texture. -->
+  <div class="noise"></div>
+
+  <!-- ============================================================
+       NAV — Fixed navigation bar at the top of every page
+       id="nav" lets script.js find it and darken it on scroll
+  ============================================================ -->
+  <nav id="nav">
+
+    <!-- Logo: clicking it scrolls back to the top (#top anchor) -->
+    <a href="#top" class="nav-logo">Jordy<span class="dot">.</span></a>
+
+    <!-- Nav links: each href="#sectionid" scrolls smoothly to that section.
+         Smooth scrolling is enabled in CSS with scroll-behavior: smooth -->
+    <ul class="nav-links">
+      <li><a href="#about">about</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+
+    <!-- External LinkedIn link. target="_blank" opens it in a new tab. -->
+    <a href="https://www.linkedin.com/in/jordyuribe" target="_blank" class="nav-cta">LinkedIn ↗</a>
+
+  </nav>
+
+  <!-- ============================================================
+       HERO — The first section visitors see (full viewport height)
+       id="top" is where the nav logo scrolls to
+  ============================================================ -->
+  <section class="hero" id="top">
+    <div class="hero-inner">
+
+      <!-- Eyebrow: small label above the main heading.
+           The pulse-dot is the animated red circle (pure CSS animation).
+           All elements in hero-inner fade in via CSS @keyframes with
+           staggered animation-delay values defined in style.css. -->
+      <div class="hero-eyebrow">
+        <span class="pulse-dot"></span>
+        Developer · Mapper · Change-Maker
+      </div>
+
+      <!-- Main heading: split into 3 spans so each line can animate in
+           separately with a staggered delay (defined in style.css).
+           The middle line gets the red accent color via h-line--accent. -->
+      <h1 class="hero-heading">
+        <span class="h-line">Building tools</span>
+        <span class="h-line">that <span style="color: var(--accent);">elevate</span></span>
+        <span class="h-line">people's lives.</span>
+      </h1>
+
+      <!-- Bio paragraph: your personal intro in your own words -->
+      <p class="hero-bio">
+        Hi, I'm Jordy and I'm a developer and GIS engineer based in Seattle. I care about making things that create real change: mapping tools that surface injustice, platforms that help communities understand their environment, and software that actually makes life better for the people using it.
+      </p>
+
+      <!-- CTA buttons: primary scrolls to projects, outline opens email client -->
+      <div class="hero-actions">
+        <a href="#projects" class="btn-primary">See my work</a>
+        <a href="/cdn-cgi/l/email-protection#5124233833347f3b3e2335287f6061606511363c30383d7f323e3c" class="btn-outline">Get in touch</a>
+      </div>
+
+      <!-- Meta info: quick facts shown in a horizontal row -->
+      <div class="hero-meta">
+        <span>Seattle, WA</span>
+        <span class="divider">·</span>
+        <span>Full-Stack Dev</span>
+        <span class="divider">·</span>
+        <span>GIS Engineer</span>
+        <span class="divider">·</span>
+        <span>IT Coordinator</span>
+      </div>
+
+    </div>
+
+    <!-- Subtle scroll hint at the bottom of the hero -->
+    <div class="hero-scroll-hint">scroll ↓</div>
+  </section>
+
+  <!-- ============================================================
+       ABOUT — Personal background and education/experience cards
+  ============================================================ -->
+  <section class="about" id="about">
+
+    <!-- Section tag: a small mono label that acts like a chapter marker -->
+    <div class="section-tag">// about me</div>
+
+    <!-- Two-column grid: text on left, info cards on right.
+         On mobile (< 900px) this collapses to a single column via CSS. -->
+    <div class="about-grid">
+
+      <!-- Left column: personal bio paragraphs -->
+      <div class="about-left">
+        <h2>Hi!</h2>
+        <p>I'm a first-gen CS grad student from Seattle with a background that doesn't fit neatly into one box. I've spent years in IT managing infrastructure, taught programming to underrepresented students, and built mapping applications that communities actually use.</p>
+        <p>What drives me isn't the tech itself — it's the moment someone uses something I built and their life is a little better for it. That's the goal every time.</p>
+        <p>Outside of code: you'll find me gaming, listening to music, or hanging out with friends. I think the best developers are people first.</p>
+      </div>
+
+      <!-- Right column: stacked info cards for education and experience -->
+      <div class="about-right">
+        <div class="about-cards">
+
+          <!-- Each card has an emoji icon + title + subtitle.
+               To add more cards, just copy one of these blocks. -->
+          <div class="about-card">
+            <div class="about-card-icon">🎓</div>
+            <div>
+              <div class="about-card-title">MS Computer Science</div>
+              <div class="about-card-sub">Seattle University · In Progress</div>
+            </div>
+          </div>
+
+          <div class="about-card">
+            <div class="about-card-icon">🗺️</div>
+            <div>
+              <div class="about-card-title">BA Geography: Data Science</div>
+              <div class="about-card-sub">University of Washington · 2025</div>
+            </div>
+          </div>
+
+          <div class="about-card">
+            <div class="about-card-icon">💻</div>
+            <div>
+              <div class="about-card-title">IT Coordinator</div>
+              <div class="about-card-sub">Kline Galland · 2023–2025</div>
+            </div>
+          </div>
+
+          <div class="about-card">
+            <div class="about-card-icon">🤝</div>
+            <div>
+              <div class="about-card-title">Founding Mentor</div>
+              <div class="about-card-sub">Changemakers in Computing · UW</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PROJECTS — Filterable project cards
+  ============================================================ -->
+  <section class="projects" id="projects">
+    <div class="section-tag">// projects</div>
+
+    <!-- Header row: heading on left, filter buttons on right -->
+    <div class="projects-header">
+      <h2>Projects.</h2>
+
+      <!-- Filter buttons: each has a data-filter attribute.
+           script.js reads this value and shows/hides cards accordingly.
+           The "active" class highlights the currently selected button.
+           data-filter="all" shows everything, "swe" or "gis" filters by category. -->
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="swe">Software Eng</button>
+        <button class="filter-btn" data-filter="gis">GIS &amp; Mapping</button>
+      </div>
+    </div>
+
+    <!-- Project cards grid: 2 columns on desktop, 1 on mobile.
+         id="projects-grid" lets script.js reference this container. -->
+    <div class="projects-grid" id="projects-grid">
+
+      <!-- CARD 1: Real-Time Urban Monitoring Platform
+           data-category="gis swe" means it shows under BOTH filter tabs.
+           card-featured gives it a slightly elevated background style. -->
+      <div class="project-card card-featured" data-category="gis swe">
+
+        <div class="card-header-zone">
+          <div class="card-badges">
+            <span class="badge badge-progress">In Progress</span>
+            <span class="badge badge-featured">Featured</span>
+          </div>
+          <span class="card-num">01</span>
+        </div>
+
+        <div class="card-body">
+          <div class="card-content">
+            <h3>Real-Time Urban Monitoring Platform</h3>
+            <p>A full-stack dashboard aggregating environmental livability metrics across Seattle. Interactive maps, time-series charts, and live sensor data — built to help communities understand what's happening in their city.</p>
+
+            <div class="card-stack">
+              <span>JavaScript</span><span>Supabase</span><span>MapLibre GL JS</span><span>SQL</span>
+            </div>
+          </div>
+
+          <div class="card-footer coming-soon-footer">
+            <span class="coming-soon-label">🚧 GitHub dropping soon</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card card-featured" data-category="gis swe">
+        <div class="card-header-zone">
+          <div class="card-badges">
+            <span class="badge badge-live">Live</span>
+            <span class="badge badge-featured">Featured</span>
+          </div>
+          <span class="card-num">02</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <h3>Participatory Checkpoint Mapping</h3>
+            <p>An interactive app mapping law enforcement and Border Patrol checkpoints across the US. Community-powered crowdsourced reporting with geocoding, search, and filter features — built for transparency.</p>
+            <div class="card-stack">
+              <span>React</span><span>Supabase</span><span>MapLibre</span><span>Vercel</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <a href="https://pogo-beta.vercel.app/" target="_blank" class="card-link">View Live ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card" data-category="swe">
+        <div class="card-header-zone">
+          <div class="card-badges"></div>
+          <span class="card-num">03</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <h3>Sports Gear Ecommerce Platform</h3>
+            <p>Full-stack ecommerce site with dynamic product filtering, real-time cart, and a Node/SQLite backend. Simulated real-world CI/CD with Git feature branches and pull requests.</p>
+            <div class="card-stack">
+              <span>Node.js</span><span>Express</span><span>SQLite</span><span>JavaScript</span>
+            </div>
+          </div>
+          <div class="card-footer coming-soon-footer">
+            <span class="coming-soon-label">🚧 GitHub coming soon</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card" data-category="gis">
+        <div class="card-header-zone">
+          <div class="card-badges"></div>
+          <span class="card-num">04</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <h3>GIS Analyst — UW Spatial Projects</h3>
+            <p>Maintained enterprise GIS datasets at UW: parcel boundaries, land use, street centerlines, demographic layers. Performed spatial analysis including overlays, hotspot analysis, raster modeling, and geocoding.</p>
+            <div class="card-stack">
+              <span>ArcGIS Pro</span><span>PostGIS</span><span>Python</span><span>GeoPandas</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="card-org">University of Washington · 2023–2025</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SKILLS — Four-column skill table
+  ============================================================ -->
+  <section class="skills" id="skills">
+    <div class="section-tag">// skills</div>
+    <h2>What I work with.</h2>
+
+    <!-- Four columns inside a single bordered container.
+         The GIS column gets green accents via the gis-col class.
+         On tablets this becomes 2 columns, on phones it's 1 column. -->
+    <div class="skills-columns">
+
+      <div class="skill-col">
+        <div class="skill-col-label">Languages</div>
+        <ul>
+          <li>Java</li><li>JavaScript / TypeScript</li>
+          <li>Python</li><li>C++</li><li>SQL</li><li>R</li>
+        </ul>
+      </div>
+
+      <div class="skill-col">
+        <div class="skill-col-label">Web &amp; Frameworks</div>
+        <ul>
+          <li>React</li><li>Node.js + Express</li>
+          <li>REST APIs</li><li>HTML / CSS</li><li>Vite</li><li>Vercel</li>
+        </ul>
+      </div>
+
+      <!-- gis-col class turns the label green and applies green hover color -->
+      <div class="skill-col gis-col">
+        <div class="skill-col-label">GIS &amp; Mapping</div>
+        <ul>
+          <li>MapLibre GL JS</li><li>ArcGIS Pro / Online</li>
+          <li>QGIS</li><li>PostGIS</li><li>GeoPandas / arcpy</li><li>Spatial Analysis</li>
+        </ul>
+      </div>
+
+      <div class="skill-col">
+        <div class="skill-col-label">Data &amp; Cloud</div>
+        <ul>
+          <li>Supabase</li><li>PostgreSQL / SQLite</li>
+          <li>MongoDB</li><li>Azure AD / MDM</li><li>Git</li><li>Windows OS Imaging</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTACT — Links to reach you
+  ============================================================ -->
+  <section class="contact" id="contact">
+    <div class="section-tag">// contact</div>
+    <div class="contact-inner">
+      <h2>Let's build something<br>that matters.</h2>
+      <p>Open to internships, research roles, and full-time opportunities in software engineering and GIS. If you're working on something that helps people — let's talk.</p>
+
+      <!-- Contact rows: each has a short label on the left + value on the right.
+           href="mailto:" automatically opens the visitor's email app.
+           The muted class dims the GitHub row since it's not live yet. -->
+      <div class="contact-links">
+        <a href="/cdn-cgi/l/email-protection#f683849f9493d89c9984928fd8c7c6c7c2b6919b979f9ad895999b" class="contact-link">
+          <span class="cl-label">Email</span>
+          <span class="cl-val"><span class="__cf_email__" data-cfemail="6f1a1d060d0a4105001d0b16415e5f5e5b2f08020e0603410c0002">[email&#160;protected]</span> ↗</span>
+        </a>
+        <a href="https://www.linkedin.com/in/jordyuribe" target="_blank" class="contact-link">
+          <span class="cl-label">LinkedIn</span>
+          <span class="cl-val">linkedin.com/in/jordyuribe ↗</span>
+        </a>
+        <!-- TODO: Replace href="#" with your real GitHub profile URL -->
+        <a href="#" class="contact-link muted">
+          <span class="cl-label">GitHub</span>
+          <span class="cl-val">Coming soon</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER — Simple bottom bar
+  ============================================================ -->
+  <footer>
+    <span>Jordy Uribe Rivas · Seattle, WA</span>
+    <span>Designed &amp; built by me · 2025</span>
+  </footer>
+
+  <!-- Script loaded at the BOTTOM of <body>, not in <head>.
+       This ensures the entire HTML 
